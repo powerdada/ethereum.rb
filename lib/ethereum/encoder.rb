@@ -54,7 +54,11 @@ module Ethereum
     end
 
     def encode_bytes(value, subtype)
-      subtype.nil? ? encode_dynamic_bytes(value) : encode_static_bytes(value)
+      if value[0..1] == '0x'
+        value[2..-1]
+      else
+        subtype.nil? ? encode_dynamic_bytes(value) : encode_static_bytes(value)
+      end
     end
 
     def encode_static_bytes(value)
